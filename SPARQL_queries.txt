@@ -48,7 +48,7 @@ PREFIX cosmog: <http://www.cosmog.org/graphdb/#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 SELECT ?paperTitle ?conference 
 	WHERE {?paper cosmog:title ?paperTitle
-        {SELECT ?paper ?conference ?authorName # subquery to find papers written by a given author
+        {SELECT ?paper ?conference # subquery to find papers written by a given author
             WHERE {?author cosmog:name "Zhibin Chen";
                            cosmog:writes_paper ?paper;
                 {SELECT ?paper ?conference # subquery to find papers published in database conferences
