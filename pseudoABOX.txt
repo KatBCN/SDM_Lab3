@@ -1,0 +1,26 @@
+1. make new namespace for the ABOX
+
+2. Load the csv file
+
+3. for each line do the following steps:
+	1. Check if topic exists, if not add it
+	2. Check if journal/conference exists, if not add it
+		1. add property conference/journal relatedTo Topic
+	3. Check if editor/chair exists, if not add it
+		1. add property editor - edits - journal OR
+		   add property chiar - organizes - conference
+	4. Add paper (or poster)
+		1. add property paper - discussesTopic - topic
+		2. add property venue - Publishes article - paper OR
+		   add property conference - PublishesPoster - poster
+	5. For each author:
+		1. Check if the author exists, if not add them
+		2. add property author - writesPaper - Paper
+	6. For each reviewer and review:
+		1. Check if the reviewer exists, if not add them
+		2. add the review/decision
+		3. add property reviewer - writeReview - review/decision
+		4. add property review/decision - reviewsPaper - Paper
+		5. add property chair/editor - assigns - reviewer
+
+4. Connect ABOX to TBOX... louis did this in RDFlib python and we have to figure out how that works in Jena... because it is not exactly the same I think 
