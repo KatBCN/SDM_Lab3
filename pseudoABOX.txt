@@ -23,4 +23,10 @@
 		4. add property review/decision - reviewsPaper - Paper
 		5. add property chair/editor - assigns - reviewer
 
-4. Connect ABOX to TBOX... louis did this in RDFlib python and we have to figure out how that works in Jena... because it is not exactly the same I think 
+4. Connect ABOX to TBOX... louis did this in RDFlib python and we have to figure out how that works in Jena... because it is not exactly the same I think
+
+
+list<String> = string.split(',') 
+
+['the whole line is one string']
+['the', 'whole', 'line']
