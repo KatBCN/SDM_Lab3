@@ -1,6 +1,9 @@
 import org.apache.jena.ontology.*;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.atlas.csv.CSVParser;
+import org.apache.jena.rdf.model.Resource;
+
+import javax.swing.text.html.InlineView;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -134,7 +137,6 @@ public class CosmogABOX_Test3_csv extends Object {
         OntProperty location = model.createOntProperty(NS + "location"); // for conferences
         OntProperty keyword = model.createOntProperty(NS + "keyword"); // keyword for topic
 
-/*
 
         // Write the TBOX model to a file
         FileOutputStream output = null;
@@ -144,73 +146,79 @@ public class CosmogABOX_Test3_csv extends Object {
             e.printStackTrace();
         }
         model.write(output);
-*/
         // Create ABOX
+
 
         CSVParser reader = CSVParser.create("article_slice.csv");
         Iterator<List<String>> iterator = reader.iterator();
         List<String> columnNames = iterator.next();
 
+        // go through each line of the csv and parse the line
         while (iterator.hasNext()) {
             List<String> line = iterator.next();
 
+            // add the paper (paperID) to the rdf and add the paper title to the rdf
             Individual paper1 = paper.createIndividual(NS + line.get(columnNames.indexOf("article")));
             paper1.addProperty(title, line.get(columnNames.indexOf("title")));
 
+            // add the Journal (journalID) to the rds, together with its properties
             Individual journal1 = journal.createIndividual(NS + line.get(columnNames.indexOf("journalID")));
             journal1.addProperty(venueTitle, line.get(columnNames.indexOf("journal")));
             journal1.addProperty(number, line.get(columnNames.indexOf("number")));
             journal1.addProperty(volume, line.get(columnNames.indexOf("volume")));
+
+            // add the property journal publishes paper
             journal1.addProperty(publishesPaper, paper1);
 
-            String[] topicString = line.get(columnNames.indexOf("topics")).split("|");
-            List<String> topics = Arrays.asList(topicString);
+            //add the editor
+            Individual editor1 = editor.createIndividual(NS + line.get(columnNames.indexOf("editor")));
+            editor1.addProperty(edits, journal1);
+            editor1.addProperty(name, line.get(columnNames.indexOf("editor")));
+
+            // For each topic connected to the paper AND journal, add the topic and connection between Journal and Paper
+            String[] topics = line.get(columnNames.indexOf("topics")).split("\\|");
             for (String top : topics) {
                 Individual topic1 = topic.createIndividual(NS + "topic/" + top);
+
+                // add connection journal
                 journal1.addProperty(relatedTo, topic1);
+                // add connection paper
                 paper1.addProperty(discussesTopic, topic1);
-                System.out.println(paper1);
+                topic1.addProperty(keyword, top);
             }
-            String[] authors = line.get(columnNames.indexOf("author")).split("|");
+
+            // for each author of the paper, add the author and connect them to the paper
+            String[] authors = line.get(columnNames.indexOf("author")).split("\\|");
             for (String auth : authors) {
                 Individual author1 = author.createIndividual(NS + auth);
+                // connect author to paper.
                 author1.addProperty(writesPaper, paper1);
-                System.out.println(author1);
-
+                author1.addProperty(name, auth);
             }
 
-
-
-//            String[] reviewers = line.get(columnNames.indexOf("reviewed_by")).split("|");
-//            for (int i = 0; i < reviewers.size(); i++) {
-//            }
-//            }
-//            for (String rev : reviewers) {
-//                Individual reviewer1 = reviewer.createIndividual(NS + rev);
-//                reviewer1.addProperty(writesReview, paper1);
-//            }
-
+            List<String> reviewers = Arrays.asList(line.get(columnNames.indexOf("reviewed_by")).split("\\|"));
+            List<String> reviews = Arrays.asList(line.get(columnNames.indexOf("reviews")).split("\\|"));
+            List<String> decisions = Arrays.asList(line.get(columnNames.indexOf("decisions")).split("\\|"));
+            for (int i = 0; i < reviewers.size(); i++) {
+                Individual reviewer1 = reviewer.createIndividual(NS + reviewers.get(i));
+                Individual decision1 = decision.createIndividual(NS + decisions.get(i));
+                decision1.addProperty(review, reviews.get(i));
+                decision1.addProperty(discussesPaper, paper1);
+                reviewer1.addProperty(writesReview, decision1);
+                reviewer1.addProperty(name, reviewers.get(i));
+                editor1.addProperty(assigns, reviewer1);
+            }
 
         }
 
-
-
-
-        // create the individuals
-
-
-/*
         // Write the ABOX model to a file
         output = null;
         try {
-            output = new FileOutputStream("cosmog_abox_2.rdf");
+            output = new FileOutputStream("cosmog_abox_2_test.rdf");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         model.write(output);
-
-*/
-
 
 
     }

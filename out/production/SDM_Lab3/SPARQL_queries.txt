@@ -1,0 +1,61 @@
+
+# 1.
+# Find all authors 
+PREFIX cosmog: <http://www.cosmog.org/graphdb/#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT ?authorURI ?authorName
+WHERE { ?authorURI  rdf:type  cosmog:author; cosmog:name ?authorName}
+
+# 2.
+# Find all properties whose domain is author
+PREFIX cosmog: <http://www.cosmog.org/graphdb/#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT DISTINCT ?property
+WHERE {
+    # queries the TBOX for properties with domain author
+    {?property  rdfs:domain  cosmog:author}
+    UNION
+    # queries the TBOX for properties with the domain of an author instance
+    {?s  rdf:type  cosmog:author; ?property ?range }
+}
+
+# 3.
+# Find all properties whose domain is either conference or journal
+# Be careful with inference on this one. Querying the TBOX only gives different results than the ABOX.
+# The domain of a property is not inferred to include the domain's subclasses in the TBOX.
+PREFIX cosmog: <http://www.cosmog.org/graphdb/#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT DISTINCT ?property
+WHERE { 
+    # queries the TBOX for properties with domain journal
+    {?property  rdfs:domain  cosmog:journal}
+    UNION
+    # queries the TBOX for properties with domain conference
+    {?property  rdfs:domain  cosmog:conference}
+    UNION
+    # queries the ABOX for properties with the domain of a journal instance
+    {?s  rdf:type  cosmog:journal; ?property ?range}
+    UNION
+    # queries the ABOX for properties with the domain of a conference instance
+    {?s  rdf:type  cosmog:conference; ?property ?range}
+}
+
+# 4.
+# Find all the papers written by a given author that were published in database conferences.
+PREFIX cosmog: <http://www.cosmog.org/graphdb/#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT ?paperTitle ?conference 
+	WHERE {?paper cosmog:title ?paperTitle
+        {SELECT ?paper ?conference # subquery to find papers written by a given author
+            WHERE {?author cosmog:name "Zhibin Chen";
+                           cosmog:writes_paper ?paper;
+                {SELECT ?paper ?conference # subquery to find papers published in database conferences
+                     WHERE{?conference rdf:type cosmog:conference;
+                                       cosmog:publishes_paper ?paper;
+                                       cosmog:related_to cosmog:databases}
+            }
+        }
+    }
+}

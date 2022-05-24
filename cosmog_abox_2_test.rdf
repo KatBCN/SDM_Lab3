@@ -1,0 +1,426 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:cosmog="http://www.cosmog.org/graphdb/#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+  <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#person"/>
+  <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#editor">
+    <rdfs:subClassOf>
+      <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#director"/>
+    </rdfs:subClassOf>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#chair">
+    <rdfs:subClassOf>
+      <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#director"/>
+    </rdfs:subClassOf>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#author">
+    <rdfs:subClassOf rdf:resource="http://www.cosmog.org/graphdb/#person"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#journal">
+    <rdfs:subClassOf>
+      <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#venue"/>
+    </rdfs:subClassOf>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#workshop">
+    <rdfs:subClassOf>
+      <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#conference"/>
+    </rdfs:subClassOf>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#conference">
+    <rdfs:subClassOf rdf:resource="http://www.cosmog.org/graphdb/#venue"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#demo_article">
+    <rdfs:subClassOf>
+      <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#article"/>
+    </rdfs:subClassOf>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#topic"/>
+  <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#short_article">
+    <rdfs:subClassOf>
+      <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#article"/>
+    </rdfs:subClassOf>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#symposium">
+    <rdfs:subClassOf rdf:resource="http://www.cosmog.org/graphdb/#conference"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#reviewer">
+    <rdfs:subClassOf rdf:resource="http://www.cosmog.org/graphdb/#person"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#decision"/>
+  <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#expert_group">
+    <rdfs:subClassOf rdf:resource="http://www.cosmog.org/graphdb/#conference"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#article">
+    <rdfs:subClassOf>
+      <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#paper"/>
+    </rdfs:subClassOf>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#poster">
+    <rdfs:subClassOf rdf:resource="http://www.cosmog.org/graphdb/#paper"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#director">
+    <rdfs:subClassOf rdf:resource="http://www.cosmog.org/graphdb/#person"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#full_article">
+    <rdfs:subClassOf rdf:resource="http://www.cosmog.org/graphdb/#article"/>
+  </rdfs:Class>
+  <rdf:Property rdf:about="http://www.cosmog.org/graphdb/#name"/>
+  <rdf:Property rdf:about="http://www.cosmog.org/graphdb/#location"/>
+  <rdf:Property rdf:about="http://www.cosmog.org/graphdb/#related_to">
+    <rdfs:range rdf:resource="http://www.cosmog.org/graphdb/#topic"/>
+    <rdfs:domain rdf:resource="http://www.cosmog.org/graphdb/#venue"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://www.cosmog.org/graphdb/#volume"/>
+  <rdf:Property rdf:about="http://www.cosmog.org/graphdb/#review"/>
+  <rdf:Property rdf:about="http://www.cosmog.org/graphdb/#keyword"/>
+  <rdf:Property rdf:about="http://www.cosmog.org/graphdb/#publishes_paper">
+    <rdfs:range rdf:resource="http://www.cosmog.org/graphdb/#article"/>
+    <rdfs:domain rdf:resource="http://www.cosmog.org/graphdb/#venue"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://www.cosmog.org/graphdb/#venueTitle"/>
+  <rdf:Property rdf:about="http://www.cosmog.org/graphdb/#discusses_topic">
+    <rdfs:range rdf:resource="http://www.cosmog.org/graphdb/#topic"/>
+    <rdfs:domain rdf:resource="http://www.cosmog.org/graphdb/#paper"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://www.cosmog.org/graphdb/#title"/>
+  <rdf:Property rdf:about="http://www.cosmog.org/graphdb/#discusses_paper">
+    <rdfs:range rdf:resource="http://www.cosmog.org/graphdb/#paper"/>
+    <rdfs:domain rdf:resource="http://www.cosmog.org/graphdb/#decision"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://www.cosmog.org/graphdb/#number"/>
+  <rdf:Property rdf:about="http://www.cosmog.org/graphdb/#organizes">
+    <rdfs:range rdf:resource="http://www.cosmog.org/graphdb/#conference"/>
+    <rdfs:domain rdf:resource="http://www.cosmog.org/graphdb/#chair"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://www.cosmog.org/graphdb/#writes_paper">
+    <rdfs:range rdf:resource="http://www.cosmog.org/graphdb/#paper"/>
+    <rdfs:domain rdf:resource="http://www.cosmog.org/graphdb/#author"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://www.cosmog.org/graphdb/#edits">
+    <rdfs:range rdf:resource="http://www.cosmog.org/graphdb/#journal"/>
+    <rdfs:domain rdf:resource="http://www.cosmog.org/graphdb/#editor"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://www.cosmog.org/graphdb/#writes_review">
+    <rdfs:range rdf:resource="http://www.cosmog.org/graphdb/#decision"/>
+    <rdfs:domain rdf:resource="http://www.cosmog.org/graphdb/#reviewer"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://www.cosmog.org/graphdb/#assigns">
+    <rdfs:range rdf:resource="http://www.cosmog.org/graphdb/#reviewer"/>
+    <rdfs:domain rdf:resource="http://www.cosmog.org/graphdb/#director"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://www.cosmog.org/graphdb/#publishes_poster">
+    <rdfs:range rdf:resource="http://www.cosmog.org/graphdb/#poster"/>
+    <rdfs:domain rdf:resource="http://www.cosmog.org/graphdb/#conference"/>
+  </rdf:Property>
+  <cosmog:author rdf:about="http://www.cosmog.org/graphdb/#HyeonjoonMoon">
+    <cosmog:name>HyeonjoonMoon</cosmog:name>
+    <cosmog:writes_paper>
+      <cosmog:paper rdf:about="http://www.cosmog.org/graphdb/#1066027">
+        <cosmog:discusses_topic>
+          <cosmog:topic rdf:about="http://www.cosmog.org/graphdb/#topic/Face">
+            <cosmog:keyword>Face</cosmog:keyword>
+          </cosmog:topic>
+        </cosmog:discusses_topic>
+        <cosmog:discusses_topic>
+          <cosmog:topic rdf:about="http://www.cosmog.org/graphdb/#topic/Algorithm">
+            <cosmog:keyword>Algorithm</cosmog:keyword>
+          </cosmog:topic>
+        </cosmog:discusses_topic>
+        <cosmog:discusses_topic>
+          <cosmog:topic rdf:about="http://www.cosmog.org/graphdb/#topic/(PVM).">
+            <cosmog:keyword>(PVM).</cosmog:keyword>
+          </cosmog:topic>
+        </cosmog:discusses_topic>
+        <cosmog:title>Efficient 3D Model based Face Representation and Recognition Algorithm using Pixel-to-Vertex Map (PVM).</cosmog:title>
+      </cosmog:paper>
+    </cosmog:writes_paper>
+  </cosmog:author>
+  <cosmog:author rdf:about="http://www.cosmog.org/graphdb/#VaibhavBhatnagar">
+    <cosmog:name>VaibhavBhatnagar</cosmog:name>
+    <cosmog:writes_paper>
+      <cosmog:paper rdf:about="http://www.cosmog.org/graphdb/#2730573">
+        <cosmog:discusses_topic>
+          <cosmog:topic rdf:about="http://www.cosmog.org/graphdb/#topic/more">
+            <cosmog:keyword>more</cosmog:keyword>
+          </cosmog:topic>
+        </cosmog:discusses_topic>
+        <cosmog:discusses_topic>
+          <cosmog:topic rdf:about="http://www.cosmog.org/graphdb/#topic/unethical">
+            <cosmog:keyword>unethical</cosmog:keyword>
+          </cosmog:topic>
+        </cosmog:discusses_topic>
+        <cosmog:discusses_topic>
+          <cosmog:topic rdf:about="http://www.cosmog.org/graphdb/#topic/a">
+            <cosmog:keyword>a</cosmog:keyword>
+          </cosmog:topic>
+        </cosmog:discusses_topic>
+        <cosmog:title>Cyber-squatting: a cyber crime more than an unethical act.</cosmog:title>
+      </cosmog:paper>
+    </cosmog:writes_paper>
+  </cosmog:author>
+  <cosmog:editor rdf:about="http://www.cosmog.org/graphdb/#MahidurGuang-Yu">
+    <cosmog:assigns>
+      <cosmog:reviewer rdf:about="http://www.cosmog.org/graphdb/#AndreasBurg">
+        <cosmog:name>AndreasBurg</cosmog:name>
+        <cosmog:writes_review>
+          <cosmog:decision rdf:about="http://www.cosmog.org/graphdb/#Accepted">
+            <cosmog:review>asperiores sint minima facilis assumenda necessitatibus cum vitae consectetur corrupti</cosmog:review>
+            <cosmog:review>nesciunt ad accusantium distinctio ullam exercitationem iste officia blanditiis fuga</cosmog:review>
+            <cosmog:review>laborum quam nisi nostrum rem officia fuga eum accusantium fugit</cosmog:review>
+            <cosmog:review>animi nobis praesentium ea eaque sequi exercitationem fugit alias asperiores</cosmog:review>
+            <cosmog:review>eius quisquam tempore ex vel amet officiis totam ut minima</cosmog:review>
+            <cosmog:discusses_paper rdf:resource="http://www.cosmog.org/graphdb/#2730573"/>
+            <cosmog:review>voluptatum modi perferendis ab obcaecati quaerat sed eum id aliquam</cosmog:review>
+            <cosmog:review>sunt odio delectus esse debitis asperiores itaque corporis nostrum et</cosmog:review>
+            <cosmog:review>beatae necessitatibus alias ea pariatur voluptatum numquam nulla facere similique</cosmog:review>
+            <cosmog:review>beatae quaerat fugit nesciunt ut architecto vitae natus in recusandae</cosmog:review>
+            <cosmog:discusses_paper>
+              <cosmog:paper rdf:about="http://www.cosmog.org/graphdb/#174388">
+                <cosmog:discusses_topic>
+                  <cosmog:topic rdf:about="http://www.cosmog.org/graphdb/#topic/Challenges">
+                    <cosmog:keyword>Challenges</cosmog:keyword>
+                  </cosmog:topic>
+                </cosmog:discusses_topic>
+                <cosmog:discusses_topic>
+                  <cosmog:topic rdf:about="http://www.cosmog.org/graphdb/#topic/Workflow,">
+                    <cosmog:keyword>Workflow,</cosmog:keyword>
+                  </cosmog:topic>
+                </cosmog:discusses_topic>
+                <cosmog:discusses_topic>
+                  <cosmog:topic rdf:about="http://www.cosmog.org/graphdb/#topic/Modeling">
+                    <cosmog:keyword>Modeling</cosmog:keyword>
+                  </cosmog:topic>
+                </cosmog:discusses_topic>
+                <cosmog:title>Scientific Workflow, Provenance, and Data Modeling Challenges and Approaches.</cosmog:title>
+              </cosmog:paper>
+            </cosmog:discusses_paper>
+            <cosmog:review>placeat maiores dicta amet cupiditate nobis libero qui provident quos</cosmog:review>
+            <cosmog:review>debitis rerum animi provident sed asperiores saepe sunt vero possimus</cosmog:review>
+            <cosmog:discusses_paper>
+              <cosmog:paper rdf:about="http://www.cosmog.org/graphdb/#884424">
+                <cosmog:discusses_topic>
+                  <cosmog:topic rdf:about="http://www.cosmog.org/graphdb/#topic/Sketching contours.">
+                    <cosmog:keyword>Sketching contours.</cosmog:keyword>
+                  </cosmog:topic>
+                </cosmog:discusses_topic>
+                <cosmog:title>Sketching contours.</cosmog:title>
+              </cosmog:paper>
+            </cosmog:discusses_paper>
+            <cosmog:review>eos doloremque ipsa incidunt in sunt eligendi ipsum aspernatur doloribus</cosmog:review>
+            <cosmog:review>eveniet error nisi in atque iste sapiente ratione alias incidunt</cosmog:review>
+            <cosmog:discusses_paper rdf:resource="http://www.cosmog.org/graphdb/#1066027"/>
+            <cosmog:review>maiores deserunt laborum aut sit debitis ratione dicta provident vitae</cosmog:review>
+            <cosmog:review>nulla consectetur tenetur cum omnis praesentium quasi neque est non</cosmog:review>
+            <cosmog:review>mollitia harum natus quod sequi assumenda dicta necessitatibus pariatur odio</cosmog:review>
+            <cosmog:discusses_paper>
+              <cosmog:paper rdf:about="http://www.cosmog.org/graphdb/#2266697">
+                <cosmog:discusses_topic>
+                  <cosmog:topic rdf:about="http://www.cosmog.org/graphdb/#topic/More">
+                    <cosmog:keyword>More</cosmog:keyword>
+                  </cosmog:topic>
+                </cosmog:discusses_topic>
+                <cosmog:discusses_topic>
+                  <cosmog:topic rdf:about="http://www.cosmog.org/graphdb/#topic/Cracking">
+                    <cosmog:keyword>Cracking</cosmog:keyword>
+                  </cosmog:topic>
+                </cosmog:discusses_topic>
+                <cosmog:discusses_topic>
+                  <cosmog:topic rdf:about="http://www.cosmog.org/graphdb/#topic/With">
+                    <cosmog:keyword>With</cosmog:keyword>
+                  </cosmog:topic>
+                </cosmog:discusses_topic>
+                <cosmog:title>Cracking More Password Hashes With Patterns.</cosmog:title>
+              </cosmog:paper>
+            </cosmog:discusses_paper>
+          </cosmog:decision>
+        </cosmog:writes_review>
+      </cosmog:reviewer>
+    </cosmog:assigns>
+    <cosmog:assigns>
+      <cosmog:reviewer rdf:about="http://www.cosmog.org/graphdb/#LyndaC.Ikejimba">
+        <cosmog:name>LyndaC.Ikejimba</cosmog:name>
+        <cosmog:writes_review rdf:resource="http://www.cosmog.org/graphdb/#Accepted"/>
+      </cosmog:reviewer>
+    </cosmog:assigns>
+    <cosmog:assigns>
+      <cosmog:reviewer rdf:about="http://www.cosmog.org/graphdb/#JessicaLosego">
+        <cosmog:name>JessicaLosego</cosmog:name>
+        <cosmog:writes_review rdf:resource="http://www.cosmog.org/graphdb/#Accepted"/>
+      </cosmog:reviewer>
+    </cosmog:assigns>
+    <cosmog:assigns>
+      <cosmog:reviewer rdf:about="http://www.cosmog.org/graphdb/#XinyuXing">
+        <cosmog:name>XinyuXing</cosmog:name>
+        <cosmog:writes_review rdf:resource="http://www.cosmog.org/graphdb/#Accepted"/>
+      </cosmog:reviewer>
+    </cosmog:assigns>
+    <cosmog:name>MahidurGuang-Yu</cosmog:name>
+    <cosmog:edits>
+      <cosmog:journal rdf:about="http://www.cosmog.org/graphdb/#12294">
+        <cosmog:related_to rdf:resource="http://www.cosmog.org/graphdb/#topic/more"/>
+        <cosmog:related_to rdf:resource="http://www.cosmog.org/graphdb/#topic/unethical"/>
+        <cosmog:related_to rdf:resource="http://www.cosmog.org/graphdb/#topic/a"/>
+        <cosmog:publishes_paper rdf:resource="http://www.cosmog.org/graphdb/#2730573"/>
+        <cosmog:volume>2</cosmog:volume>
+        <cosmog:number>2</cosmog:number>
+        <cosmog:venueTitle>Int.J.Soc.Comput.CyberPhys.Syst.</cosmog:venueTitle>
+      </cosmog:journal>
+    </cosmog:edits>
+  </cosmog:editor>
+  <cosmog:author rdf:about="http://www.cosmog.org/graphdb/#EminIslamTatli">
+    <cosmog:name>EminIslamTatli</cosmog:name>
+    <cosmog:writes_paper rdf:resource="http://www.cosmog.org/graphdb/#2266697"/>
+  </cosmog:author>
+  <cosmog:author rdf:about="http://www.cosmog.org/graphdb/#AndrewNealen">
+    <cosmog:name>AndrewNealen</cosmog:name>
+    <cosmog:writes_paper rdf:resource="http://www.cosmog.org/graphdb/#884424"/>
+  </cosmog:author>
+  <cosmog:author rdf:about="http://www.cosmog.org/graphdb/#RameshChandra">
+    <cosmog:name>RameshChandra</cosmog:name>
+    <cosmog:writes_paper rdf:resource="http://www.cosmog.org/graphdb/#2730573"/>
+  </cosmog:author>
+  <cosmog:editor rdf:about="http://www.cosmog.org/graphdb/#AsadzadehProrok">
+    <cosmog:assigns>
+      <cosmog:reviewer rdf:about="http://www.cosmog.org/graphdb/#JamesTheiler">
+        <cosmog:name>JamesTheiler</cosmog:name>
+        <cosmog:writes_review rdf:resource="http://www.cosmog.org/graphdb/#Accepted"/>
+      </cosmog:reviewer>
+    </cosmog:assigns>
+    <cosmog:assigns>
+      <cosmog:reviewer rdf:about="http://www.cosmog.org/graphdb/#ChristopherJ.Harper">
+        <cosmog:name>ChristopherJ.Harper</cosmog:name>
+        <cosmog:writes_review rdf:resource="http://www.cosmog.org/graphdb/#Accepted"/>
+      </cosmog:reviewer>
+    </cosmog:assigns>
+    <cosmog:name>AsadzadehProrok</cosmog:name>
+    <cosmog:edits>
+      <cosmog:journal rdf:about="http://www.cosmog.org/graphdb/#6291">
+        <cosmog:related_to rdf:resource="http://www.cosmog.org/graphdb/#topic/Sketching contours."/>
+        <cosmog:publishes_paper rdf:resource="http://www.cosmog.org/graphdb/#884424"/>
+        <cosmog:volume>32</cosmog:volume>
+        <cosmog:number>5</cosmog:number>
+        <cosmog:venueTitle>Comput.Graph.</cosmog:venueTitle>
+      </cosmog:journal>
+    </cosmog:edits>
+  </cosmog:editor>
+  <cosmog:author rdf:about="http://www.cosmog.org/graphdb/#ShawnBowers">
+    <cosmog:name>ShawnBowers</cosmog:name>
+    <cosmog:writes_paper rdf:resource="http://www.cosmog.org/graphdb/#174388"/>
+  </cosmog:author>
+  <cosmog:editor rdf:about="http://www.cosmog.org/graphdb/#OuaredHerr">
+    <cosmog:assigns>
+      <cosmog:reviewer rdf:about="http://www.cosmog.org/graphdb/#WeiLan">
+        <cosmog:name>WeiLan</cosmog:name>
+        <cosmog:writes_review rdf:resource="http://www.cosmog.org/graphdb/#Accepted"/>
+      </cosmog:reviewer>
+    </cosmog:assigns>
+    <cosmog:assigns>
+      <cosmog:reviewer rdf:about="http://www.cosmog.org/graphdb/#ShiboHe">
+        <cosmog:name>ShiboHe</cosmog:name>
+        <cosmog:writes_review rdf:resource="http://www.cosmog.org/graphdb/#Accepted"/>
+      </cosmog:reviewer>
+    </cosmog:assigns>
+    <cosmog:assigns>
+      <cosmog:reviewer rdf:about="http://www.cosmog.org/graphdb/#ToruAraki">
+        <cosmog:name>ToruAraki</cosmog:name>
+        <cosmog:writes_review rdf:resource="http://www.cosmog.org/graphdb/#Accepted"/>
+      </cosmog:reviewer>
+    </cosmog:assigns>
+    <cosmog:assigns>
+      <cosmog:reviewer rdf:about="http://www.cosmog.org/graphdb/#LiangDong">
+        <cosmog:name>LiangDong</cosmog:name>
+        <cosmog:writes_review rdf:resource="http://www.cosmog.org/graphdb/#Accepted"/>
+      </cosmog:reviewer>
+    </cosmog:assigns>
+    <cosmog:name>OuaredHerr</cosmog:name>
+    <cosmog:edits>
+      <cosmog:journal rdf:about="http://www.cosmog.org/graphdb/#13432">
+        <cosmog:related_to rdf:resource="http://www.cosmog.org/graphdb/#topic/Challenges"/>
+        <cosmog:related_to rdf:resource="http://www.cosmog.org/graphdb/#topic/Workflow,"/>
+        <cosmog:related_to rdf:resource="http://www.cosmog.org/graphdb/#topic/Modeling"/>
+        <cosmog:publishes_paper rdf:resource="http://www.cosmog.org/graphdb/#174388"/>
+        <cosmog:volume>1</cosmog:volume>
+        <cosmog:number>1</cosmog:number>
+        <cosmog:venueTitle>J.DataSemant.</cosmog:venueTitle>
+      </cosmog:journal>
+    </cosmog:edits>
+  </cosmog:editor>
+  <cosmog:editor rdf:about="http://www.cosmog.org/graphdb/#MalcolmFidler">
+    <cosmog:assigns>
+      <cosmog:reviewer rdf:about="http://www.cosmog.org/graphdb/#MichaelA.Murphy">
+        <cosmog:name>MichaelA.Murphy</cosmog:name>
+        <cosmog:writes_review rdf:resource="http://www.cosmog.org/graphdb/#Accepted"/>
+      </cosmog:reviewer>
+    </cosmog:assigns>
+    <cosmog:assigns>
+      <cosmog:reviewer rdf:about="http://www.cosmog.org/graphdb/#GeorgeSklivanitis">
+        <cosmog:name>GeorgeSklivanitis</cosmog:name>
+        <cosmog:writes_review rdf:resource="http://www.cosmog.org/graphdb/#Accepted"/>
+      </cosmog:reviewer>
+    </cosmog:assigns>
+    <cosmog:assigns>
+      <cosmog:reviewer rdf:about="http://www.cosmog.org/graphdb/#CharlesAntônioNascimentoCosta">
+        <cosmog:name>CharlesAntônioNascimentoCosta</cosmog:name>
+        <cosmog:writes_review rdf:resource="http://www.cosmog.org/graphdb/#Accepted"/>
+      </cosmog:reviewer>
+    </cosmog:assigns>
+    <cosmog:assigns>
+      <cosmog:reviewer rdf:about="http://www.cosmog.org/graphdb/#YiminDou">
+        <cosmog:name>YiminDou</cosmog:name>
+        <cosmog:writes_review rdf:resource="http://www.cosmog.org/graphdb/#Accepted"/>
+      </cosmog:reviewer>
+    </cosmog:assigns>
+    <cosmog:name>MalcolmFidler</cosmog:name>
+    <cosmog:edits>
+      <cosmog:journal rdf:about="http://www.cosmog.org/graphdb/#9751">
+        <cosmog:related_to rdf:resource="http://www.cosmog.org/graphdb/#topic/More"/>
+        <cosmog:related_to rdf:resource="http://www.cosmog.org/graphdb/#topic/Cracking"/>
+        <cosmog:related_to rdf:resource="http://www.cosmog.org/graphdb/#topic/With"/>
+        <cosmog:publishes_paper rdf:resource="http://www.cosmog.org/graphdb/#2266697"/>
+        <cosmog:volume>10</cosmog:volume>
+        <cosmog:number>8</cosmog:number>
+        <cosmog:venueTitle>IEEETrans.Inf.ForensicsSecur.</cosmog:venueTitle>
+      </cosmog:journal>
+    </cosmog:edits>
+  </cosmog:editor>
+  <cosmog:author rdf:about="http://www.cosmog.org/graphdb/#JohannesZimmermann">
+    <cosmog:name>JohannesZimmermann</cosmog:name>
+    <cosmog:writes_paper rdf:resource="http://www.cosmog.org/graphdb/#884424"/>
+  </cosmog:author>
+  <cosmog:author rdf:about="http://www.cosmog.org/graphdb/#KanghunJeong">
+    <cosmog:name>KanghunJeong</cosmog:name>
+    <cosmog:writes_paper rdf:resource="http://www.cosmog.org/graphdb/#1066027"/>
+  </cosmog:author>
+  <cosmog:editor rdf:about="http://www.cosmog.org/graphdb/#AmadoriNewelski">
+    <cosmog:assigns>
+      <cosmog:reviewer rdf:about="http://www.cosmog.org/graphdb/#MengchuanZou">
+        <cosmog:name>MengchuanZou</cosmog:name>
+        <cosmog:writes_review rdf:resource="http://www.cosmog.org/graphdb/#Accepted"/>
+      </cosmog:reviewer>
+    </cosmog:assigns>
+    <cosmog:assigns>
+      <cosmog:reviewer rdf:about="http://www.cosmog.org/graphdb/#PabloChamoso">
+        <cosmog:name>PabloChamoso</cosmog:name>
+        <cosmog:writes_review rdf:resource="http://www.cosmog.org/graphdb/#Accepted"/>
+      </cosmog:reviewer>
+    </cosmog:assigns>
+    <cosmog:name>AmadoriNewelski</cosmog:name>
+    <cosmog:edits>
+      <cosmog:journal rdf:about="http://www.cosmog.org/graphdb/#14774">
+        <cosmog:related_to rdf:resource="http://www.cosmog.org/graphdb/#topic/Face"/>
+        <cosmog:related_to rdf:resource="http://www.cosmog.org/graphdb/#topic/Algorithm"/>
+        <cosmog:related_to rdf:resource="http://www.cosmog.org/graphdb/#topic/(PVM)."/>
+        <cosmog:publishes_paper rdf:resource="http://www.cosmog.org/graphdb/#1066027"/>
+        <cosmog:volume>5</cosmog:volume>
+        <cosmog:number>1</cosmog:number>
+        <cosmog:venueTitle>KSIITrans.InternetInf.Syst.</cosmog:venueTitle>
+      </cosmog:journal>
+    </cosmog:edits>
+  </cosmog:editor>
+  <cosmog:author rdf:about="http://www.cosmog.org/graphdb/#MarcAlexa">
+    <cosmog:name>MarcAlexa</cosmog:name>
+    <cosmog:writes_paper rdf:resource="http://www.cosmog.org/graphdb/#884424"/>
+  </cosmog:author>
+</rdf:RDF>
