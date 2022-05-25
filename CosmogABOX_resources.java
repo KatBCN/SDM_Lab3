@@ -125,52 +125,62 @@ public class CosmogABOX_resources {
         // DatatypeProperty name = model.createDatatypeProperty(NS + "name");
         // DatatypeProperty year = model.createDatatypeProperty(NS + "year");
         OntProperty title = model.createOntProperty(NS + "title"); // for paper titles
+        title.addDomain(paper);
         OntProperty venueTitle = model.createOntProperty(NS + "venueTitle"); // for venue titles
+        venueTitle.addDomain(venue);
         OntProperty name = model.createOntProperty(NS + "name"); // for names of people
+        name.addDomain(person);
         OntProperty number = model.createOntProperty(NS + "number"); // journal numbers
+        number.addDomain(journal);
         OntProperty volume = model.createOntProperty(NS + "volume"); // journal volumes
+        volume.addDomain(journal);
         OntProperty review = model.createOntProperty(NS + "review"); // review related to decision
+        review.addDomain(decision);
         OntProperty location = model.createOntProperty(NS + "location"); // for conferences
+        location.addDomain(conference);
         OntProperty keyword = model.createOntProperty(NS + "keyword"); // keyword for topic
+        keyword.addDomain(topic);
         OntProperty conferenceFranchise = model.createOntProperty(NS + "conferenceFranchise");
+        conferenceFranchise.addDomain(conference);
         OntProperty verdict = model.createOntProperty(NS + "verdict");
+        verdict.addDomain(decision);
 
-//        //Write the TBOX model to a file
-//        FileOutputStream output = null;
-//        try {
-//            output = new FileOutputStream("cosmog-TBOX.rdf");
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//        model.write(output);
+        //Write the TBOX model to a file
+        FileOutputStream TBOXoutput = null;
+        try {
+            TBOXoutput = new FileOutputStream("cosmog-TBOX.rdf");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        model.write(TBOXoutput);
 
 
         // CREATE THE ABOX
 
-        CSVParser reader = CSVParser.create("article_slice.csv");
+        CSVParser reader = CSVParser.create("articles_processed.csv");
         Iterator<List<String>> iterator = reader.iterator();
         List<String> columnNames = iterator.next();
 
         while (iterator.hasNext()) {
             List<String> line = iterator.next();
 
-            Resource paperResource = model.createResource(NS + "paper-" + line.get(columnNames.indexOf("article")));
+            Resource paperResource = model.createResource(NS + "paper_" + line.get(columnNames.indexOf("article")));
             paperResource.addProperty(title, line.get(columnNames.indexOf("title")));
 
-            Resource journalResource = model.createResource(NS + "journal-" + line.get(columnNames.indexOf("journalID")));
+            Resource journalResource = model.createResource(NS + "journal_" + line.get(columnNames.indexOf("journalID")));
             journalResource.addProperty(venueTitle, line.get(columnNames.indexOf("journal")));
             journalResource.addProperty(number, line.get(columnNames.indexOf("number")));
             journalResource.addProperty(volume, line.get(columnNames.indexOf("volume")));
 
             journalResource.addProperty(publishesPaper, paperResource);
 
-            Resource editorResource = model.createResource(NS + "editor-" + line.get(columnNames.indexOf("editor")));
+            Resource editorResource = model.createResource(NS + "editor_" + line.get(columnNames.indexOf("editor")));
             editorResource.addProperty(edits, journalResource);
             editorResource.addProperty(name, line.get(columnNames.indexOf("editor")));
 
             String[] topics = line.get(columnNames.indexOf("topics")).split("\\|");
             for (String top : topics) {
-                Resource topicResource = model.createResource(NS + "topic-" + top);
+                Resource topicResource = model.createResource(NS + "topic_" + top);
                 topicResource.addProperty(keyword, top);
 
                 paperResource.addProperty(discussesTopic, topicResource);
@@ -179,7 +189,7 @@ public class CosmogABOX_resources {
 
             String[] authors = line.get(columnNames.indexOf("author")).split("\\|");
             for (String auth : authors){
-                Resource authorResource = model.createResource(NS + "author-" + auth);
+                Resource authorResource = model.createResource(NS + "author_" + auth);
                 authorResource.addProperty(writesPaper, paperResource);
                 authorResource.addProperty(name, auth);
             }
@@ -190,8 +200,8 @@ public class CosmogABOX_resources {
             List<String> decisionIDs = Arrays.asList(line.get(columnNames.indexOf("decisionID")).split("\\|"));
 
             for (int i = 0; i < reviewers.size(); i++) {
-                Resource reviewerResource = model.createResource(NS + "reviewer-" + reviewers.get(i));
-                Resource decisionResource = model.createResource(NS + "decision-" + decisionIDs.get(i));
+                Resource reviewerResource = model.createResource(NS + "reviewer_" + reviewers.get(i));
+                Resource decisionResource = model.createResource(NS + "decision_" + decisionIDs.get(i));
                 decisionResource.addProperty(review, reviews.get(i));
                 decisionResource.addProperty(verdict, decisions.get(i));
                 decisionResource.addProperty(discussesPaper, paperResource);
@@ -203,30 +213,30 @@ public class CosmogABOX_resources {
 
         // ADD conferences to the ABOX
 
-        CSVParser proceedingReader = CSVParser.create("proceeding_slice.csv");
+        CSVParser proceedingReader = CSVParser.create("proceeding_processed.csv");
         Iterator<List<String>> proceedingIterator = proceedingReader.iterator();
         List<String> proceedingColumnNames = proceedingIterator.next();
 
         while (proceedingIterator.hasNext()) {
             List<String> line = proceedingIterator.next();
 
-            Resource paperResource = model.createResource(NS + "paper-" + line.get(proceedingColumnNames.indexOf("articleID")));
+            Resource paperResource = model.createResource(NS + "paper_" + line.get(proceedingColumnNames.indexOf("articleID")));
             paperResource.addProperty(title, line.get(proceedingColumnNames.indexOf("articleTitle")));
 
-            Resource conferenceResource = model.createResource(NS + "conference-" + line.get(proceedingColumnNames.indexOf("conferenceID")));
+            Resource conferenceResource = model.createResource(NS + "conference_" + line.get(proceedingColumnNames.indexOf("conferenceID")));
             conferenceResource.addProperty(venueTitle, line.get(proceedingColumnNames.indexOf("conferenceTitle")));
             conferenceResource.addProperty(location, line.get(proceedingColumnNames.indexOf("location")));
             conferenceResource.addProperty(conferenceFranchise, line.get(proceedingColumnNames.indexOf("conference")));
 
             conferenceResource.addProperty(publishesPaper, paperResource);
 
-            Resource chairResource = model.createResource(NS + "chair-" + line.get(proceedingColumnNames.indexOf("chair")));
+            Resource chairResource = model.createResource(NS + "chair_" + line.get(proceedingColumnNames.indexOf("chair")));
             chairResource.addProperty(organizes, conferenceResource);
             chairResource.addProperty(name, line.get(proceedingColumnNames.indexOf("chair")));
 
             String[] topics = line.get(proceedingColumnNames.indexOf("topic")).split("\\|");
             for (String top : topics) {
-                Resource topicResource = model.createResource(NS + "topic-" + top);
+                Resource topicResource = model.createResource(NS + "topic_" + top);
                 topicResource.addProperty(keyword, top);
 
                 paperResource.addProperty(discussesTopic, topicResource);
@@ -235,7 +245,7 @@ public class CosmogABOX_resources {
 
             String[] authors = line.get(proceedingColumnNames.indexOf("author")).split("\\|");
             for (String auth : authors){
-                Resource authorResource = model.createResource(NS + "author-" + auth);
+                Resource authorResource = model.createResource(NS + "author_" + auth);
                 authorResource.addProperty(writesPaper, paperResource);
                 authorResource.addProperty(name, auth);
             }
@@ -245,8 +255,8 @@ public class CosmogABOX_resources {
             List<String> decisions = Arrays.asList(line.get(proceedingColumnNames.indexOf("decisions")).split("\\|"));
             List<String> decisionIDs = Arrays.asList(line.get(proceedingColumnNames.indexOf("decisionID")).split("\\|"));
             for (int i = 0; i < reviewers.size(); i++) {
-                Resource reviewerResource = model.createResource(NS + "reviewer-" + reviewers.get(i));
-                Resource decisionResource = model.createResource(NS + "decision-" + decisionIDs.get(i));
+                Resource reviewerResource = model.createResource(NS + "reviewer_" + reviewers.get(i));
+                Resource decisionResource = model.createResource(NS + "decision_" + decisionIDs.get(i));
                 decisionResource.addProperty(verdict, decisions.get(i));
                 decisionResource.addProperty(review, reviews.get(i));
                 decisionResource.addProperty(discussesPaper, paperResource);
@@ -258,7 +268,7 @@ public class CosmogABOX_resources {
 
         FileOutputStream output = null;
         try {
-            output = new FileOutputStream("cosmog_abox.rdf");
+            output = new FileOutputStream("cosmog-ABOX.rdf");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -284,45 +294,45 @@ public class CosmogABOX_resources {
         OntClass linkingConference = linkingModel.createClass(NS + "conference");
 
 
-        CSVParser linkingArticlesReader = CSVParser.create("article_slice.csv");
+        CSVParser linkingArticlesReader = CSVParser.create("articles_processed.csv");
         Iterator<List<String>> linkingArticlesIterator = linkingArticlesReader.iterator();
         List<String> linkingArticlesColumnNames = linkingArticlesIterator.next();
 
         while (linkingArticlesIterator.hasNext()){
             List<String> line = linkingArticlesIterator.next();
             if (Objects.equals(line.get(linkingArticlesColumnNames.indexOf("paperType")), "demo_paper")) {
-                Individual paperIndividual = linkingDemoArticle.createIndividual(NS + "paper-" + line.get(linkingArticlesColumnNames.indexOf("article")));
+                Individual paperIndividual = linkingDemoArticle.createIndividual(NS + "paper_" + line.get(linkingArticlesColumnNames.indexOf("article")));
             } else if (Objects.equals(line.get(linkingArticlesColumnNames.indexOf("paperType")), "full_paper")) {
-                Individual paperIndividual = linkingFullArticle.createIndividual(NS + "paper-" + line.get(linkingArticlesColumnNames.indexOf("article")));
+                Individual paperIndividual = linkingFullArticle.createIndividual(NS + "paper_" + line.get(linkingArticlesColumnNames.indexOf("article")));
             } else if (Objects.equals(line.get(linkingArticlesColumnNames.indexOf("paperType")), "short_paper")) {
-                Individual paperIndividual = linkingShortArticle.createIndividual(NS + "paper-" + line.get(linkingArticlesColumnNames.indexOf("article")));
+                Individual paperIndividual = linkingShortArticle.createIndividual(NS + "paper_" + line.get(linkingArticlesColumnNames.indexOf("article")));
             }
         }
 
-        CSVParser linkingProceedingReader = CSVParser.create("proceeding_slice.csv");
+        CSVParser linkingProceedingReader = CSVParser.create("proceeding_processed.csv");
         Iterator<List<String>> linkingProceedingIterator = linkingProceedingReader.iterator();
         List<String> linkingProceedingColumnNames = linkingProceedingIterator.next();
 
-        while (linkingArticlesIterator.hasNext()){
-            List<String> line = linkingArticlesIterator.next();
+        while (linkingProceedingIterator.hasNext()){
+            List<String> line = linkingProceedingIterator.next();
             if (Objects.equals(line.get(linkingProceedingColumnNames.indexOf("articleType")), "demo_paper")) {
-                Individual paperIndividual = linkingDemoArticle.createIndividual(NS + "paper-" + line.get(linkingProceedingColumnNames.indexOf("articleID")));
+                Individual paperIndividual = linkingDemoArticle.createIndividual(NS + "paper_" + line.get(linkingProceedingColumnNames.indexOf("articleID")));
             } else if (Objects.equals(line.get(linkingProceedingColumnNames.indexOf("articleType")), "full_paper")) {
-                Individual paperIndividual = linkingFullArticle.createIndividual(NS + "paper-" + line.get(linkingProceedingColumnNames.indexOf("articleID")));
+                Individual paperIndividual = linkingFullArticle.createIndividual(NS + "paper_" + line.get(linkingProceedingColumnNames.indexOf("articleID")));
             } else if (Objects.equals(line.get(linkingProceedingColumnNames.indexOf("articleType")), "short_paper")) {
-                Individual paperIndividual = linkingShortArticle.createIndividual(NS + "paper-" + line.get(linkingProceedingColumnNames.indexOf("articleID")));
+                Individual paperIndividual = linkingShortArticle.createIndividual(NS + "paper_" + line.get(linkingProceedingColumnNames.indexOf("articleID")));
             } else if (Objects.equals(line.get(linkingProceedingColumnNames.indexOf("articleType")), "poster")) {
-                Individual paperIndividual = linkingPoster.createIndividual(NS + "paper-" + line.get(linkingProceedingColumnNames.indexOf("articleID")));
+                Individual paperIndividual = linkingPoster.createIndividual(NS + "paper_" + line.get(linkingProceedingColumnNames.indexOf("articleID")));
             }
 
             if (Objects.equals(line.get(linkingProceedingColumnNames.indexOf("conferenceType")), "workshop")){
-                Individual conferenceIndividual = linkingWorkshop.createIndividual(NS + "conference-" + line.get(linkingProceedingColumnNames.indexOf("conferenceID")));
+                Individual conferenceIndividual = linkingWorkshop.createIndividual(NS + "conference_" + line.get(linkingProceedingColumnNames.indexOf("conferenceID")));
             } else if (Objects.equals(line.get(linkingProceedingColumnNames.indexOf("conferenceType")), "symposium")){
-                Individual conferenceIndividual = linkingSymposium.createIndividual(NS + "conference-" + line.get(linkingProceedingColumnNames.indexOf("conferenceID")));
+                Individual conferenceIndividual = linkingSymposium.createIndividual(NS + "conference_" + line.get(linkingProceedingColumnNames.indexOf("conferenceID")));
             } else if (Objects.equals(line.get(linkingProceedingColumnNames.indexOf("conferenceType")), "expert_group")){
-                Individual conferenceIndividual = linkingExpertGroup.createIndividual(NS + "conference-" + line.get(linkingProceedingColumnNames.indexOf("conferenceID")));
+                Individual conferenceIndividual = linkingExpertGroup.createIndividual(NS + "conference_" + line.get(linkingProceedingColumnNames.indexOf("conferenceID")));
             } else if (Objects.equals(line.get(linkingProceedingColumnNames.indexOf("conferenceType")), "regular")){
-                Individual conferenceIndividual = linkingConference.createIndividual(NS + "conference-" + line.get(linkingProceedingColumnNames.indexOf("conferenceID")));
+                Individual conferenceIndividual = linkingConference.createIndividual(NS + "conference_" + line.get(linkingProceedingColumnNames.indexOf("conferenceID")));
             }
         }
         FileOutputStream linkingOutput = null;

@@ -1,0 +1,139 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:cosmog="http://www.cosmog.org/graphdb/#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+  <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#person"/>
+  <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#editor">
+    <rdfs:subClassOf>
+      <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#director"/>
+    </rdfs:subClassOf>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#chair">
+    <rdfs:subClassOf>
+      <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#director"/>
+    </rdfs:subClassOf>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#author">
+    <rdfs:subClassOf rdf:resource="http://www.cosmog.org/graphdb/#person"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#journal">
+    <rdfs:subClassOf>
+      <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#venue"/>
+    </rdfs:subClassOf>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#workshop">
+    <rdfs:subClassOf>
+      <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#conference"/>
+    </rdfs:subClassOf>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#conference">
+    <rdfs:subClassOf rdf:resource="http://www.cosmog.org/graphdb/#venue"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#demo_article">
+    <rdfs:subClassOf>
+      <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#article"/>
+    </rdfs:subClassOf>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#topic"/>
+  <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#short_article">
+    <rdfs:subClassOf>
+      <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#article"/>
+    </rdfs:subClassOf>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#symposium">
+    <rdfs:subClassOf rdf:resource="http://www.cosmog.org/graphdb/#conference"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#reviewer">
+    <rdfs:subClassOf rdf:resource="http://www.cosmog.org/graphdb/#person"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#decision"/>
+  <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#expert_group">
+    <rdfs:subClassOf rdf:resource="http://www.cosmog.org/graphdb/#conference"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#poster">
+    <rdfs:subClassOf>
+      <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#paper"/>
+    </rdfs:subClassOf>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#article">
+    <rdfs:subClassOf rdf:resource="http://www.cosmog.org/graphdb/#paper"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#director">
+    <rdfs:subClassOf rdf:resource="http://www.cosmog.org/graphdb/#person"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.cosmog.org/graphdb/#full_article">
+    <rdfs:subClassOf rdf:resource="http://www.cosmog.org/graphdb/#article"/>
+  </rdfs:Class>
+  <rdf:Property rdf:about="http://www.cosmog.org/graphdb/#name">
+    <rdfs:domain rdf:resource="http://www.cosmog.org/graphdb/#person"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://www.cosmog.org/graphdb/#location">
+    <rdfs:domain rdf:resource="http://www.cosmog.org/graphdb/#conference"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://www.cosmog.org/graphdb/#related_to">
+    <rdfs:range rdf:resource="http://www.cosmog.org/graphdb/#topic"/>
+    <rdfs:domain rdf:resource="http://www.cosmog.org/graphdb/#venue"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://www.cosmog.org/graphdb/#volume">
+    <rdfs:domain rdf:resource="http://www.cosmog.org/graphdb/#journal"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://www.cosmog.org/graphdb/#review">
+    <rdfs:domain rdf:resource="http://www.cosmog.org/graphdb/#decision"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://www.cosmog.org/graphdb/#keyword">
+    <rdfs:domain rdf:resource="http://www.cosmog.org/graphdb/#topic"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://www.cosmog.org/graphdb/#publishes_paper">
+    <rdfs:range rdf:resource="http://www.cosmog.org/graphdb/#article"/>
+    <rdfs:domain rdf:resource="http://www.cosmog.org/graphdb/#venue"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://www.cosmog.org/graphdb/#verdict">
+    <rdfs:domain rdf:resource="http://www.cosmog.org/graphdb/#decision"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://www.cosmog.org/graphdb/#venueTitle">
+    <rdfs:domain rdf:resource="http://www.cosmog.org/graphdb/#venue"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://www.cosmog.org/graphdb/#conferenceFranchise">
+    <rdfs:domain rdf:resource="http://www.cosmog.org/graphdb/#conference"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://www.cosmog.org/graphdb/#discusses_topic">
+    <rdfs:range rdf:resource="http://www.cosmog.org/graphdb/#topic"/>
+    <rdfs:domain rdf:resource="http://www.cosmog.org/graphdb/#paper"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://www.cosmog.org/graphdb/#title">
+    <rdfs:domain rdf:resource="http://www.cosmog.org/graphdb/#paper"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://www.cosmog.org/graphdb/#discusses_paper">
+    <rdfs:range rdf:resource="http://www.cosmog.org/graphdb/#paper"/>
+    <rdfs:domain rdf:resource="http://www.cosmog.org/graphdb/#decision"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://www.cosmog.org/graphdb/#organizes">
+    <rdfs:range rdf:resource="http://www.cosmog.org/graphdb/#conference"/>
+    <rdfs:domain rdf:resource="http://www.cosmog.org/graphdb/#chair"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://www.cosmog.org/graphdb/#number">
+    <rdfs:domain rdf:resource="http://www.cosmog.org/graphdb/#journal"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://www.cosmog.org/graphdb/#writes_paper">
+    <rdfs:range rdf:resource="http://www.cosmog.org/graphdb/#paper"/>
+    <rdfs:domain rdf:resource="http://www.cosmog.org/graphdb/#author"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://www.cosmog.org/graphdb/#edits">
+    <rdfs:range rdf:resource="http://www.cosmog.org/graphdb/#journal"/>
+    <rdfs:domain rdf:resource="http://www.cosmog.org/graphdb/#editor"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://www.cosmog.org/graphdb/#assigns">
+    <rdfs:range rdf:resource="http://www.cosmog.org/graphdb/#reviewer"/>
+    <rdfs:domain rdf:resource="http://www.cosmog.org/graphdb/#director"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://www.cosmog.org/graphdb/#writes_review">
+    <rdfs:range rdf:resource="http://www.cosmog.org/graphdb/#decision"/>
+    <rdfs:domain rdf:resource="http://www.cosmog.org/graphdb/#reviewer"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://www.cosmog.org/graphdb/#publishes_poster">
+    <rdfs:range rdf:resource="http://www.cosmog.org/graphdb/#poster"/>
+    <rdfs:domain rdf:resource="http://www.cosmog.org/graphdb/#conference"/>
+  </rdf:Property>
+</rdf:RDF>
