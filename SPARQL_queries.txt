@@ -8,6 +8,7 @@ WHERE { ?authorURI  rdf:type  cosmog:author; cosmog:name ?authorName}
 
 # 2.
 # Find all properties whose domain is author
+# This query does not work with OWL because of the superclass of owl:Thing
 PREFIX cosmog: <http://www.cosmog.org/graphdb/#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -20,42 +21,47 @@ WHERE {
     {?s  rdf:type  cosmog:author; ?property ?range }
 }
 
+
 # 3.
 # Find all properties whose domain is either conference or journal
-# Be careful with inference on this one. Querying the TBOX only gives different results than the ABOX.
-# The domain of a property is not inferred to include the domain's subclasses in the TBOX.
 PREFIX cosmog: <http://www.cosmog.org/graphdb/#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 SELECT DISTINCT ?property
-WHERE { 
-    # queries the TBOX for properties with domain journal
-    {?property  rdfs:domain  cosmog:journal}
+# querying properties of domain journal and its superclasses
+WHERE { ?property  rdfs:domain  ?journalsuperclass
+    {
+    # querying which superclasses journal belongs to
+    SELECT ?journalsuperclass 
+            WHERE { cosmog:journal  rdfs:subClassOf  ?journalsuperclass }
+    }
+    
     UNION
-    # queries the TBOX for properties with domain conference
-    {?property  rdfs:domain  cosmog:conference}
-    UNION
-    # queries the ABOX for properties with the domain of a journal instance
-    {?s  rdf:type  cosmog:journal; ?property ?range}
-    UNION
-    # queries the ABOX for properties with the domain of a conference instance
-    {?s  rdf:type  cosmog:conference; ?property ?range}
+    # querying properties of domain conference and its superclasses
+    { SELECT DISTINCT ?property
+        WHERE { ?property  rdfs:domain  ?conferencesuperclass
+        {
+        # querying which superclasses conference belongs to
+        SELECT ?conferencesuperclass 
+                WHERE { cosmog:conference  rdfs:subClassOf  ?conferencesuperclass }
+ 	       }
+ 	   }
+	}
 }
+
+
+
 
 # 4.
 # Find all the papers written by a given author that were published in database conferences.
 PREFIX cosmog: <http://www.cosmog.org/graphdb/#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-SELECT ?paperTitle ?conference 
-	WHERE {?paper cosmog:title ?paperTitle
-        {SELECT ?paper ?conference # subquery to find papers written by a given author
-            WHERE {?author cosmog:name "Zhibin Chen";
-                           cosmog:writes_paper ?paper;
-                {SELECT ?paper ?conference # subquery to find papers published in database conferences
-                     WHERE{?conference rdf:type cosmog:conference;
-                                       cosmog:publishes_paper ?paper;
-                                       cosmog:related_to cosmog:databases}
-            }
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?paper ?conference
+WHERE {?author cosmog:name "SarahZennou";
+               cosmog:writes_paper ?paper;
+               {SELECT ?paper ?conference WHERE {?conference rdf:type cosmog:conference;
+                                                            cosmog:publishes_paper ?paper;
+                                                            cosmog:related_to "databases"}
         }
-    }
-}
+      }
