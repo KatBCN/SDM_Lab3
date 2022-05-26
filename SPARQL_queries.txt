@@ -10,6 +10,18 @@ WHERE { ?authorURI  rdf:type  cosmog:author; cosmog:name ?authorName}
 # Find all properties whose domain is author
 # This query does not work with OWL because of the superclass of owl:Thing
 PREFIX cosmog: <http://www.cosmog.org/graphdb/#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT DISTINCT ?property
+WHERE { ?property  rdfs:domain  ?class
+    {
+    # subquerying which superclasses author belongs to
+    SELECT ?class 
+            WHERE { cosmog:author  rdfs:subClassOf  ?class }
+    }
+}
+
+# Query over ABOX
+PREFIX cosmog: <http://www.cosmog.org/graphdb/#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 SELECT DISTINCT ?property
@@ -17,9 +29,10 @@ WHERE {
     # queries the TBOX for properties with domain author
     {?property  rdfs:domain  cosmog:author}
     UNION
-    # queries the TBOX for properties with the domain of an author instance
+    # queries the ABOX for properties with the domain of an author instance
     {?s  rdf:type  cosmog:author; ?property ?range }
 }
+
 
 
 # 3.
